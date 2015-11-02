@@ -2,6 +2,7 @@ package net.luminis.mongodb_logging.controller;
 
 import net.luminis.mongodb_logging.domain.Log;
 import net.luminis.mongodb_logging.repository.LogRepository;
+import net.luminis.mongodb_logging.value.LogCount;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,5 +32,14 @@ public class LogRestController {
         } else {
             return repo.findAll();
         }
+    }
+
+    @RequestMapping(value = "/count", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public LogCount error(@RequestParam(required = true) String level){
+        level = level.toUpperCase();
+        List<Log> logList =  repo.findByLevel(level);
+        LogCount logCount = new LogCount(logList.size());
+        return logCount;
     }
 }

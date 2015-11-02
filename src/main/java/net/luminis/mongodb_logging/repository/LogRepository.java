@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface LogRepository extends MongoRepository<Log, String> {
     List<Log> findByName(String name);
+
+    List<Log> findByLevel(String level);
 }
